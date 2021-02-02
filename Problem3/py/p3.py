@@ -23,6 +23,8 @@ def main():
     print("Find the largest prime factor of ", number)
     prime_factor_search(number)
     print("Answer: ", prime_factors[-1])
+    print("Number of prime_factors: ", len(prime_factors))
+    print("Discovered primes: ", len(primes))
 
 
 def prime_factor_search(_dividend):
@@ -51,8 +53,8 @@ def prime_factor_search(_dividend):
             if _dividend % primes[-1] == 0:
                 # Add this new prime to the prime_factors array
                 prime_factors.append(primes[-1])
+                # Generate a new dividend to process against
                 _dividend = _dividend / primes[-1]
-                print("New _dividend", _dividend)
                 _prime_candidate += 1
 
 
