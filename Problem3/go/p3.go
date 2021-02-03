@@ -60,6 +60,8 @@ func primeFactorSearch(dividend int) {
 		if primeCandidate > dividend {
 			return
 		}
+		fmt.Println("primes ", primes)
+
 
 		for _, prime := range primes {
 			if prime == 1 {
@@ -68,6 +70,7 @@ func primeFactorSearch(dividend int) {
 			}
 			fmt.Println("primeCandidate ", primeCandidate)
 			fmt.Println("prime: ", prime)
+			fmt.Println("rimeCandidate % prime: ", primeCandidate % prime)
 
 			if primeCandidate % prime == 0 {
 				fmt.Println("primeCandidate % prime: ", primeCandidate % prime)
@@ -78,26 +81,32 @@ func primeFactorSearch(dividend int) {
 			}
 		}
 
+		fmt.Println("primeFound: ", primeFound)
+
 		// This is where the lack of for..else is jacking me up
+		if !primeFound {
 
-		primes = append(primes,primeCandidate)
-		fmt.Println("primes: ", primes)
+			primes = append(primes, primeCandidate)
+			fmt.Println("primes: ", primes)
 
-		if dividend % primes[len(primes)-1] == 0 {
+			if dividend%primes[len(primes)-1] == 0 {
 
-			newPrime  = primes[len(primes)-1]
-			fmt.Println("newPrime: ",newPrime)
+				newPrime = primes[len(primes)-1]
+				fmt.Println("newPrime: ", newPrime)
 
-			primeFactors = append(primes,newPrime)
-			dividend = dividend / newPrime
-			primeCandidate++
+				primeFactors = append(primes, newPrime)
+				dividend = dividend / newPrime
+				primeCandidate++
+			}
 		}
-
 	}
 
 }
 
 func Find(s []int, e int) bool {
+	fmt.Println("slice: ", s)
+	fmt.Println("e: ", e)
+
 	for _, a := range s {
 		if a == e {
 			return true
