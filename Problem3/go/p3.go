@@ -9,16 +9,14 @@ import (
 )
 
 //The test
-const number int = 13195
+//const number int = 13195
 //Answer is [5,7,13,29]
 
-
-
 //The real deal
-//const number int = 600851475143
+const number int = 600851475143
 
 //Starting prime
-//var prime_candidate int = 1
+var primeCandidate int = 1
 
 //List of discovered primes
 var primes []int
@@ -30,97 +28,55 @@ func main() {
 	fmt.Println("Find the largest prime factor of: ", number)
 	primeFactorSearch(number)
 	fmt.Println("Answer: ", primeFactors[len(primeFactors)-1])
-	fmt.Println("prime_factors: ", primeFactors)
 	fmt.Println("Number of prime_factors: ", len(primeFactors))
 	fmt.Println("Discovered primes: ", len(primes))
 }
 
 func primeFactorSearch(dividend int) {
-	fmt.Println("Enter primeFactorSearch")
-	fmt.Println("dividend: ", dividend)
 
 	var newPrime int
+
 	// Initial load of primes array
 	if len(primes) == 0 {
 		primes = append(primes,1)
 	}
 
-	fmt.Println("primes: ", primes)
-
-	primeCandidate := primes[len(primes)-1]
-	fmt.Println("here: ", primes)
-
-
-
 	for {
 		knownPrimeFound := Find(primes, primeCandidate)
-		fmt.Println("knownPrimeFound: ", knownPrimeFound)
 
 		if knownPrimeFound {
 			primeCandidate = primes[len(primes)-1] + 1
-			fmt.Println("primeCandidateA: ", primeCandidate)
 		}
 
 		if primeCandidate > dividend {
 			return
 		}
-		fmt.Println("primes ", primes)
 
-
-
+		PRIMELOOP:
 		for _, prime := range primes {
 			if prime == 1 {
-				fmt.Println("skip 1: ")
-				goto PRIMELOOP
-			}
-			PRIMELOOP:
-
-			fmt.Println("primeCandidateB ", primeCandidate)
-			fmt.Println("prime: ", prime)
-			fmt.Println("rimeCandidate % prime: ", primeCandidate % prime)
-
-
-			if primeCandidate % prime == 0 && prime != 1{
-			//if primeCandidate % prime == 0 {
-				fmt.Println("here")
-				fmt.Println("primeCandidate % prime: ", primeCandidate % prime)
-				fmt.Println("primeCandidate2: ", primeCandidate)
-				primeCandidate++
-				//knownPrimeFound = false
-				fmt.Println("primeCandidate3: ", primeCandidate)
-				//goto PRIMELOOP2
 				continue
 			}
+
+			if primeCandidate % prime == 0 && prime != 1{
+				primeCandidate++
+				goto PRIMELOOP
+			}
 		}
-	//PRIMELOOP2:
 
-		//os.Exit(0)
-		fmt.Println("here: ")
-
-		// This is where the lack of for..else is jacking me up
 		if !knownPrimeFound {
-
 			primes = append(primes, primeCandidate)
-			fmt.Println("primes: ", primes)
-
 			if dividend%primes[len(primes)-1] == 0 {
-
 				newPrime = primes[len(primes)-1]
-				fmt.Println("newPrime: ", newPrime)
-
 				primeFactors = append(primeFactors, newPrime)
 				dividend = dividend / newPrime
 				primeCandidate++
 			}
 		}
 	}
-
 }
 
 func Find(s []int, e int) bool {
-	//fmt.Println("slice: ", s)
-	//fmt.Println("e: ", e)
-
 	for _, a := range s {
 		if a == e {
 			return true
@@ -128,18 +84,3 @@ func Find(s []int, e int) bool {
 	}
 	return false
 }
-
-//        for _prime in primes:
-//            if _prime == 1:
-//                continue
-//            if _prime_candidate % _prime == 0:
-//                _prime_candidate += 1
-//                break
-//        else:
-//            primes.append(_prime_candidate)
-//            if _dividend % primes[-1] == 0:
-//                # Add this new prime to the prime_factors array
-//                prime_factors.append(primes[-1])
-//                # Generate a new dividend to process against
-//                _dividend = _dividend / primes[-1]
-//                _prime_candidate += 1
