@@ -51,9 +51,11 @@ func primeFactorSearch(dividend int) {
 	fmt.Println("here: ", primes)
 
 	primeFound := Find(primes, primeCandidate)
+	fmt.Println("primeFound: ", primeFound)
+
 	if primeFound {
 		primeCandidate = primes[len(primes)-1] + 1
-		fmt.Println("primeCandidate: ", primeCandidate)
+		fmt.Println("primeCandidateA: ", primeCandidate)
 	}
 
 	for {
@@ -63,25 +65,35 @@ func primeFactorSearch(dividend int) {
 		fmt.Println("primes ", primes)
 
 
+
 		for _, prime := range primes {
 			if prime == 1 {
 				fmt.Println("skip 1: ")
-				continue
+				goto PRIMELOOP1
 			}
-			fmt.Println("primeCandidate ", primeCandidate)
+			PRIMELOOP1:
+
+			fmt.Println("primeCandidateB ", primeCandidate)
 			fmt.Println("prime: ", prime)
 			fmt.Println("rimeCandidate % prime: ", primeCandidate % prime)
 
+
+			//if primeCandidate % prime == 0 && prime != 1{
 			if primeCandidate % prime == 0 {
+				fmt.Println("here")
 				fmt.Println("primeCandidate % prime: ", primeCandidate % prime)
 				fmt.Println("primeCandidate2: ", primeCandidate)
 				primeCandidate++
+				primeFound = false
 				fmt.Println("primeCandidate3: ", primeCandidate)
+				//goto PRIMELOOP2
 				break
 			}
+			//PRIMELOOP2:
 		}
 
-		fmt.Println("primeFound: ", primeFound)
+		//os.Exit(0)
+		fmt.Println("here: ")
 
 		// This is where the lack of for..else is jacking me up
 		if !primeFound {
@@ -104,8 +116,8 @@ func primeFactorSearch(dividend int) {
 }
 
 func Find(s []int, e int) bool {
-	fmt.Println("slice: ", s)
-	fmt.Println("e: ", e)
+	//fmt.Println("slice: ", s)
+	//fmt.Println("e: ", e)
 
 	for _, a := range s {
 		if a == e {
