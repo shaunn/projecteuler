@@ -50,15 +50,17 @@ func primeFactorSearch(dividend int) {
 	primeCandidate := primes[len(primes)-1]
 	fmt.Println("here: ", primes)
 
-	knownPrimeFound := Find(primes, primeCandidate)
-	fmt.Println("knownPrimeFound: ", knownPrimeFound)
 
-	if knownPrimeFound {
-		primeCandidate = primes[len(primes)-1] + 1
-		fmt.Println("primeCandidateA: ", primeCandidate)
-	}
 
 	for {
+		knownPrimeFound := Find(primes, primeCandidate)
+		fmt.Println("knownPrimeFound: ", knownPrimeFound)
+
+		if knownPrimeFound {
+			primeCandidate = primes[len(primes)-1] + 1
+			fmt.Println("primeCandidateA: ", primeCandidate)
+		}
+
 		if primeCandidate > dividend {
 			return
 		}
@@ -69,24 +71,25 @@ func primeFactorSearch(dividend int) {
 		for _, prime := range primes {
 			if prime == 1 {
 				fmt.Println("skip 1: ")
-				goto PRIMELOOP1
+				goto PRIMELOOP
 			}
-			PRIMELOOP1:
+			PRIMELOOP:
 
 			fmt.Println("primeCandidateB ", primeCandidate)
 			fmt.Println("prime: ", prime)
 			fmt.Println("rimeCandidate % prime: ", primeCandidate % prime)
 
 
-			//if primeCandidate % prime == 0 && prime != 1{
-			if primeCandidate % prime == 0 {
+			if primeCandidate % prime == 0 && prime != 1{
+			//if primeCandidate % prime == 0 {
 				fmt.Println("here")
 				fmt.Println("primeCandidate % prime: ", primeCandidate % prime)
 				fmt.Println("primeCandidate2: ", primeCandidate)
 				primeCandidate++
-				knownPrimeFound = false
+				//knownPrimeFound = false
 				fmt.Println("primeCandidate3: ", primeCandidate)
 				//goto PRIMELOOP2
+				continue
 			}
 		}
 	//PRIMELOOP2:
@@ -105,7 +108,7 @@ func primeFactorSearch(dividend int) {
 				newPrime = primes[len(primes)-1]
 				fmt.Println("newPrime: ", newPrime)
 
-				primeFactors = append(primes, newPrime)
+				primeFactors = append(primeFactors, newPrime)
 				dividend = dividend / newPrime
 				primeCandidate++
 			}
