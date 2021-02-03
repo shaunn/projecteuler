@@ -50,10 +50,10 @@ func primeFactorSearch(dividend int) {
 	primeCandidate := primes[len(primes)-1]
 	fmt.Println("here: ", primes)
 
-	primeFound := Find(primes, primeCandidate)
-	fmt.Println("primeFound: ", primeFound)
+	knownPrimeFound := Find(primes, primeCandidate)
+	fmt.Println("knownPrimeFound: ", knownPrimeFound)
 
-	if primeFound {
+	if knownPrimeFound {
 		primeCandidate = primes[len(primes)-1] + 1
 		fmt.Println("primeCandidateA: ", primeCandidate)
 	}
@@ -84,19 +84,18 @@ func primeFactorSearch(dividend int) {
 				fmt.Println("primeCandidate % prime: ", primeCandidate % prime)
 				fmt.Println("primeCandidate2: ", primeCandidate)
 				primeCandidate++
-				primeFound = false
+				knownPrimeFound = false
 				fmt.Println("primeCandidate3: ", primeCandidate)
 				//goto PRIMELOOP2
-				break
 			}
-			//PRIMELOOP2:
 		}
+	//PRIMELOOP2:
 
 		//os.Exit(0)
 		fmt.Println("here: ")
 
 		// This is where the lack of for..else is jacking me up
-		if !primeFound {
+		if !knownPrimeFound {
 
 			primes = append(primes, primeCandidate)
 			fmt.Println("primes: ", primes)
