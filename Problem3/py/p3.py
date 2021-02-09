@@ -39,7 +39,7 @@ def prime_factor_search(_dividend):
 
     while True:
 
-        if _prime_candidate > _dividend:
+        if _prime_candidate > _dividend**(1/2):
             break
 
         for _prime in primes:
