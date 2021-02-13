@@ -41,7 +41,6 @@
 #    pump it out
 
 
-
 # A list of the products of the subsets
 subset_products = []
 
@@ -68,8 +67,13 @@ super_number_block = """
 71636269561882670428252483600823257530420752963450
 """
 
+# Define the length of a sliding list of adjacent values
+# adjacent_range = 4
+adjacent_range = 13
+
 
 def main():
+    global adjacent_range
     # Convert the super number string to an actual
     #   number. Watch me convert it to a string and
     #   then an array later
@@ -77,59 +81,32 @@ def main():
 
     # Told you
     super_array = list(map(int, str(super_number)))
-    # Define the length of a sliding list of adjacent values
-    # adjacent_range = 4
-    adjacent_range = 13
 
     while True:
-        candidate_subset = []
-
-        for x in range(0, adjacent_range):
-            # print(super_array[x])
-            candidate_subset.append(super_array[x])
-
-        if 0 in super_array[0:adjacent_range]:
-            # print("of course", super_array[0:adjacent_range])
-            skip_index = find_last_zero(super_array[0:adjacent_range])
-            super_array = super_array[skip_index:]
-        else:
-            # Find the product of the first array
-            subset_product = array_product(candidate_subset)
-
-            # Append the newly discovered subset_product to the subset_products list
-            subset_products.append(subset_product)
-            # Chop off the first subset from the super_array
-            super_array = super_array[adjacent_range:]
-
-        # If the remaining number of elements is less than 1, break out. If greater
-        #   than one but less than the adjacent_range window, readjust the window
-        #   and process the subset anyways
-        if len(super_array) < 1:
+        if len(super_array) <= 1:
             # We're done here
             break
         elif len(super_array) < adjacent_range:
-            # print("len(super_array",len(super_array))
-            # print("adjacent_range", adjacent_range)
+
             adjacent_range = len(super_array)
 
-    print("Highest product of",adjacent_range,"adjacent digits is",max(subset_products))
+        candidate_subset = []
 
-def find_last_zero(_array):
-    # test
-    # _array = [0,1,0,1]
-    # _array = [0,1,1,1]
-    _array = [2,1,0,0]
-    # print("_array",_array)
-    # Confirm there is a zero. I don't trust the other guy
-    if 0 in _array:
-        #  index() function only returns the first occurrence, so reverse the list
-        #   since there could be multiple zeros and process from there
-        _array.reverse()
-        _last_zero_index_reverse = _array.index(0)
+        for x in range(0, adjacent_range):
+            candidate_subset.append(super_array[x])
 
-        _last_zero_index = (len(_array) - 1) - _last_zero_index_reverse
-        # print("_last_zero_index", _last_zero_index)
-        return _last_zero_index
+        # Find the product of the first array
+        subset_product = array_product(candidate_subset)
+
+        # Append the newly discovered subset_product to the subset_products list
+        subset_products.append(subset_product)
+
+        # Chop off the first element from the super_array
+        super_array = super_array[1:]
+        continue
+
+    print("Highest product of", adjacent_range, "adjacent digits is", max(subset_products))
+
 
 def array_product(_input_array):
     # Needs to be one because this is a multiplying function
