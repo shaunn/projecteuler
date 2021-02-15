@@ -3,14 +3,11 @@
 # Find the sum of all the primes below two million.
 
 # The test
-number = 10
+# number = 10
 # Answer is 17
 
 # The real deal
-# number = 600851475143
-
-# Starting prime
-prime_candidate = 1
+number = 2000000
 
 # List of discovered primes
 primes = []
@@ -18,38 +15,38 @@ primes = []
 # List of discovered prime factors
 prime_factors = []
 
-def main():
-    print("init")
 
-def prime_factor_search(_dividend):
+def main():
+    nth_prime = prime_factor_generator(number)
+    print("The last prime below", number, "is", nth_prime[-1])
+    print(primes)
+    print(sum(primes))
+
+
+def prime_factor_generator(_max):
     # Initial load of primes array
     if not primes:
-        # 1 is a prime. 0 is not
-        primes.append(1)
-        # "prime" the primes array! Get it?
+        # 1 is NOT a prime. 0 is not. 2 is the first. TIL
+        _prime_candidate = 2
+        primes.append(_prime_candidate)
+        # print("New prime:",_prime_candidate)
+    # "prime" the primes array! Get it?
     _prime_candidate = primes[-1]
     if _prime_candidate in primes:
         _prime_candidate = primes[-1] + 1
 
     while True:
-
-        if _prime_candidate > _dividend:
-            break
-
         for _prime in primes:
-            if _prime == 1:
-                continue
             if _prime_candidate % _prime == 0:
                 _prime_candidate += 1
                 break
         else:
-            primes.append(_prime_candidate)
-            if _dividend % primes[-1] == 0:
-                # Add this new prime to the prime_factors array
-                prime_factors.append(primes[-1])
-                # Generate a new dividend to process against
-                _dividend = _dividend / primes[-1]
-                _prime_candidate += 1
+            if _prime_candidate > _max:
+                break
+            else:
+                primes.append(_prime_candidate)
+                # print("New prime:",_prime_candidate)
+    return primes
 
 
 if __name__ == "__main__":
