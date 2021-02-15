@@ -22,28 +22,38 @@ sum_of_triplets = 1000
 
 def main():
     # Starting points for a < b < c
-    a = 1
-    b = 2
-    c = 3
+    # a = 1
+    # b = 2
+    # c = 3
+    a = b = c = 0
 
     while a + b + c < sum_of_triplets:
+        # print(a, b, c)
+        # while a < b:
+        a, b, c = platonic_sequence(a)
         print(a, b, c)
-        while a < b:
-            c = get_hypotenuse(a, b)
-            print(c)
-            print(c%1)
-            if (c).is_integer():
-                print("a:", a)
-                print("a:", a, "b:", b, "c:", c)
-                print("a+b+c:", a + b + c)
-                print("abc", a * b * c)
-                # exit()
-            else:
-                a += 1
-            b += 1
+        print(a < b )
+        # if a < b  and a + b + c < sum_of_triplets:
+        if a < b:
+            if a + b + c < sum_of_triplets:
+                if pythagoreanEquation(a, b, c):
+
+                    print("a:", a)
+                    print("a:", a, "b:", b, "c:", c)
+                    print("a+b+c:", a + b + c)
+                    print("abc", a * b * c)
+                    exit()
+
+        # print("b",b)
+        b += 1
+        # print(a)
+
+
         # a = 1
-            print("grok",a + b + c )
-            print("h:",a + b + c < sum_of_triplets)
+        #     print(a, b, c)
+        #
+        #     print("grok",a + b + c )
+        #     print("h:",a + b + c == sum_of_triplets)
 
 
 # def main():
@@ -53,15 +63,15 @@ def main():
 #         print(a, b, c)
 #         print("a+b+c:", a + b + c)
 #
-#         if a < b < c and a + b + c == sum_of_triplets:
-#             if eval_pythagoreanEquation(a, b, c):
-#                 print("a:", a)
-#                 print("a:", a, "b:", b, "c:", c)
-#                 print("a+b+c:", a + b + c)
-#                 print("abc", a * b * c)
-#                 exit()
-#
-#         a += 1
+        # if a < b < c and a + b + c == sum_of_triplets:
+        #     if eval_pythagoreanEquation(a, b, c):
+        #         print("a:", a)
+        #         print("a:", a, "b:", b, "c:", c)
+        #         print("a+b+c:", a + b + c)
+        #         print("abc", a * b * c)
+        #         exit()
+        #
+        # a += 1
 
 # print("wew lad, that didn't work. Going Euclid")
 #
@@ -99,8 +109,8 @@ def platonic_sequence(_a):
     else:
         # Shouldn't be possible
         exit(1)
-
-    return _a, _b, _c
+    print("return", _a, _b, _c)
+    return int(_a), int(_b), int(_c)
 
 
 def get_hypotenuse(_a, _b, _c=False):
@@ -115,13 +125,12 @@ def get_hypotenuse(_a, _b, _c=False):
     return _c
 
 
-# def pythagoreanEquation(_a, _b, _c = None):
-#     if _c is None:
-#         _c = (_a ** 2 + _b ** 2)**(1/2)
-#     print(_a,_b,_c)
-#     if _a ** 2 + _b ** 2 == _c ** 2:
-#         return _a, _b, _c
-#     return False
+def pythagoreanEquation(_a, _b, _c = None):
+    if _c is None:
+        _c = (_a ** 2 + _b ** 2)**(1/2)
+    if _a ** 2 + _b ** 2 == _c ** 2:
+        return _a, _b, _c
+    return False
 
 
 if __name__ == "__main__":
