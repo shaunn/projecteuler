@@ -71,148 +71,82 @@ def main():
 
     # Using a,b instead of x,y because it will be confusing
     #   without normalizing so it isn't y,x
-    a = 0  # Vertical
-    b = 0  # Horizontal
+    # a = 0  # Vertical, or row index
+    # b = 0  # Horizontal, or column index
 
     a_max = len(matrix[0])
     b_max = len(matrix)
 
-
-
     for a in range(a_max):
         for b in range(b_max):
-            print(a, b, matrix[a][b])
-            # adjacent_product = get_adjacent_products(matrix, (a, b), adjacent_range)
             process_adjacent_products(matrix, (a, b), adjacent_range)
 
-    print("max:", max(product_store))
-
+    print("Greatest product of four adjacent numbers in the same direction:")
+    print(max(product_store))
 
 
 def process_adjacent_products(_matrix, _coordinates, _range):
     # Moving counter-clockwise: E, SE, S, SW, W, NW, N, NE
-    # But I think just going E, SE, and S will cover it, all other
-    #   directions being redundant
+    # But I think just going NE, E, SE, and S will cover it, all other
+    #   directions being redundant since starting at 0,0
 
     products_right_to_left(_matrix, _coordinates, _range)
     products_diagonal(_matrix, _coordinates, _range)
     products_top_down(_matrix, _coordinates, _range)
+
+    # A rerun of products_diagonal with the matrix flipped
     _matrix.reverse()
     products_diagonal(_matrix, _coordinates, _range)
 
 
-
 def products_right_to_left(_matrix, _coordinates, _range):
-    print("EAST ==========")
+    # The easiest method
     _a = _coordinates[0]
     _b = _coordinates[1]
     _tmp_list = []
-    _tmp_list = _matrix[_a][_b:_b + _range]
-    print("_b + _range",_b + _range)
-    print(_a, _b, _matrix[_a][_b])
-    print(_tmp_list)
-    product_store.append(get_product_of_list(_tmp_list))
 
-    # # West
-    # print("West")
-    # print("_b-_range",_b-_range)
-    # # print("start",_matrix[_a][_b])
-    # # print("end",_matrix[_a][_b-_range:_b])
-    # print("start",_matrix[_a][_b])
-    # print("end",_matrix[_a][_b-_range])
-    # _tmp_list = _matrix[_a][_b+_range:_b]
-    # print("_tmpl_list",_tmp_list)
-    # product_store.append(get_product_of_list(_tmp_list))
+    # So easy
+    _tmp_list = _matrix[_a][_b:_b + _range]
+
+    # Get the product and store it
+    product_store.append(get_product_of_list(_tmp_list))
 
 
 def products_diagonal(_matrix, _coordinates, _range):
-    print(_matrix)
+    # A bit tricky, but manageable
     _a = _coordinates[0]
     _b = _coordinates[1]
-    # South-East
-    print("SE")
     _tmp_list = []
+
     for _step in range(_range):
-        print("step:", _step)
-        print("astep:", _a + _step)
-        print("bstep:", _b + _step)
+        # This test is to avoid index out of range errors
         if _a + _step < len(_matrix[0]) and _b + _step < len(_matrix):
+            # Increment both a and b by one
             _tmp_list.append(_matrix[_a + _step][_b + _step])
-    print("_tmpl_list", _tmp_list)
+
+    # Get the product and store it
     product_store.append(get_product_of_list(_tmp_list))
 
 
 def products_top_down(_matrix, _coordinates, _range):
     _a = _coordinates[0]
     _b = _coordinates[1]
-    # _range = _range - 1
-
-    # South
-    print("SOUTH ---------")
-    # print("coord", _a, _b, _matrix[_a][_b])
-    # print("range", _range)
     _tmp_list = []
-    # print("1_a+_range", _a + _range)
-    # print("len(_matrix)", len(_matrix))
+
     if _a + _range >= len(_matrix):
         _range = len(_matrix) - _a + 1
     for _step in range(_range):
-        # print("_step",_step)
-        # print("_a + _step,_b", _a + _step, _b)
         if _a + _step >= len(_matrix):
-            # print("continue")
             continue
-        # print(_a + _step, _b, _matrix[_a + _step][_b])
         _tmp_list.append(_matrix[_a + _step][_b])
-        # print("_tmp_list",_tmp_list)
 
     product_store.append(get_product_of_list(_tmp_list))
-        # print("step",_step)
-        # print(_a + _step,_b)
-        # print(_a + _step,_b,_matrix[_a + _step][_b])
-        # _tmp_list.append(_matrix[_a + _step][_b])
-        # _tmp_list.append(_matrix[_a + _step][_b])
-
-    print(_tmp_list)
-
-    # if _a + _range >= len(_matrix) -1:
-    #     # _range = _a - _range - len(_matrix)
-    #     _range = len(_matrix) - _a
-    # print("_a+_range", _a + _range)
-    # print("pre-range:",_range)
-    # # if _a + _range >= len(_matrix):
-    # #     _range = _a + _range - len(_matrix)
-    # print("post-range:", _range)
-    # print("start", _a, _b, _matrix[_a][_b])
-    # print("end", _a + _range, _b, _matrix[_a + _range][_b])
-    # # print(_matrix[4][0])
-    # # print(_matrix[0][4])
-    # # exit()
-
-    # for _step in range(_range):
-    #     print("step",_step)
-    #     print(_a + _step,_b,_matrix[_a + _step][_b])
-    #     _tmp_list.append(_matrix[_a + _step][_b])
-    #     _tmp_list.append(_matrix[_a + _step][_b])
-    # print("_tmpl_list", _tmp_list)
-    # # _product = 1
-    # # for el in _tmp_list:
-    # #     _product *= el
-    # product_store.append(get_product_of_list(_tmp_list))
-    #
-    # print("woo")
-    # print(_matrix[_a][_b])
-    # # print(_matrix[_a][_b])
-    # # exit()
-    return True
 
 
 def get_product_of_list(_list):
     _product = 1
     for _factor in _list:
         _product *= _factor
-    print(_list)
-    print("product", _product)
     return _product
 
 
