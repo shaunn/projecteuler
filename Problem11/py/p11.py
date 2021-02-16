@@ -87,74 +87,32 @@ def main():
 
 def process_adjacent_products(_matrix, _coordinates, _range):
     # Moving counter-clockwise: E, SE, S, SW, W, NW, N, NE
-    # But I think just going NE, E, SE, and S will cover it, all other
-    #   directions being redundant since starting at 0,0
+    #   where  E, SE, and S are positively oriented from the origin
+    #   and  N, NE, NW, W, and SW are negatively oriented from the origin
+    #   so the matrix is inverse
 
-    products_right_to_left(_matrix, _coordinates, _range)
-    products_diagonal(_matrix, _coordinates, _range)
-    products_top_down(_matrix, _coordinates, _range)
-
-    # A rerun of products_diagonal with the matrix flipped
-    _matrix.reverse()
-    products_diagonal(_matrix, _coordinates, _range)
+    for _ in range(2):
+        process_products_over_range_and_direction(_matrix, _coordinates, _range)
+        _matrix.reverse()
+        _matrix = [sublist[::-1] for sublist in _matrix]
 
 
-def products_right_to_left(_matrix, _coordinates, _range):
-    # The easiest method
+def process_products_over_range_and_direction(_matrix, _coordinates, _range):
     _a = _coordinates[0]
     _b = _coordinates[1]
-    _tmp_list = []
 
-    # So easy
-    _tmp_list = _matrix[_a][_b:_b + _range]
-
-    # Get the product and store it
-    product_store.append(get_product_of_list(_tmp_list))
-
-
-def products_diagonal(_matrix, _coordinates, _range):
-    # A bit tricky, but manageable
-    _a = _coordinates[0]
-    _b = _coordinates[1]
-    _tmp_list = []
-
-    for _step in range(_range):
-        # This test is to avoid index out of range errors
-        if _a + _step < len(_matrix[0]) and _b + _step < len(_matrix):
-            # Increment both a and b by one
-            _tmp_list.append(_matrix[_a + _step][_b + _step])
-
-    # Get the product and store it
-    product_store.append(get_product_of_list(_tmp_list))
-
-
-def products_top_down(_matrix, _coordinates, _range):
-    # A bit tricky, but manageable
-    _a = _coordinates[0]
-    _b = _coordinates[1]
-    _tmp_list = []
-
-    for _step in range(_range):
-        # This test is to avoid index out of range errors
-        if _a + _step < len(_matrix[0]) and _b + _step < len(_matrix):
-            # Increment both a and b by one
-            _tmp_list.append(_matrix[_a + _step][_b])
-
-    # Get the product and store it
-    product_store.append(get_product_of_list(_tmp_list))
-
-    # _a = _coordinates[0]
-    # _b = _coordinates[1]
-    # _tmp_list = []
-    #
-    # if _a + _range >= len(_matrix):
-    #     _range = len(_matrix) - _a + 1
-    # for _step in range(_range):
-    #     if _a + _step >= len(_matrix):
-    #         continue
-    #     _tmp_list.append(_matrix[_a + _step][_b])
-    #
-    # product_store.append(get_product_of_list(_tmp_list))
+    # Just playing with an idea
+    # (1, 0) Step increment a only (East to West)
+    # (0, 1) Step increment b only (North to South)
+    # (1, 1) Step increment both a and b (North-West to South-East)
+    _cardinal_switches = [(1, 0), (0, 1), (1, 1)]
+    for _switch in _cardinal_switches:
+        _tmp_list = []
+        for _step in range(_range):
+            # This test is to avoid index out of range errors
+            if _a + (_switch[0] * _step) < len(_matrix[0]) and _b + (_switch[1] * _step) < len(_matrix):
+                _tmp_list.append(_matrix[_a + (_switch[0] * _step)][_b + (_switch[1] * _step)])
+        product_store.append(get_product_of_list(_tmp_list))
 
 
 def get_product_of_list(_list):
