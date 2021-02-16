@@ -84,7 +84,9 @@ def main():
             print(a, b, matrix[a][b])
             # adjacent_product = get_adjacent_products(matrix, (a, b), adjacent_range)
             process_adjacent_products(matrix, (a, b), adjacent_range)
-            print("max:", max(product_store))
+
+    print("max:", max(product_store))
+
 
 
 def process_adjacent_products(_matrix, _coordinates, _range):
@@ -92,11 +94,11 @@ def process_adjacent_products(_matrix, _coordinates, _range):
     # But I think just going E, SE, and S will cover it, all other
     #   directions being redundant
 
-    # products_right_to_left(_matrix, _coordinates, _range)
-    # products_diagonal(_matrix, _coordinates, _range)
+    products_right_to_left(_matrix, _coordinates, _range)
+    products_diagonal(_matrix, _coordinates, _range)
     products_top_down(_matrix, _coordinates, _range)
-    # _matrix.reverse()
-    # products_diagonal(_matrix, _coordinates, _range)
+    _matrix.reverse()
+    products_diagonal(_matrix, _coordinates, _range)
 
 
 
@@ -147,22 +149,22 @@ def products_top_down(_matrix, _coordinates, _range):
 
     # South
     print("SOUTH ---------")
-    print("coord", _a, _b, _matrix[_a][_b])
-    print("range", _range)
+    # print("coord", _a, _b, _matrix[_a][_b])
+    # print("range", _range)
     _tmp_list = []
-    print("1_a+_range", _a + _range)
-    print("len(_matrix)", len(_matrix))
+    # print("1_a+_range", _a + _range)
+    # print("len(_matrix)", len(_matrix))
     if _a + _range >= len(_matrix):
         _range = len(_matrix) - _a + 1
     for _step in range(_range):
-        print("_step",_step)
-        print("_a + _step,_b", _a + _step, _b)
+        # print("_step",_step)
+        # print("_a + _step,_b", _a + _step, _b)
         if _a + _step >= len(_matrix):
-            print("continue")
+            # print("continue")
             continue
-        print(_a + _step, _b, _matrix[_a + _step][_b])
+        # print(_a + _step, _b, _matrix[_a + _step][_b])
         _tmp_list.append(_matrix[_a + _step][_b])
-        print("_tmp_list",_tmp_list)
+        # print("_tmp_list",_tmp_list)
 
     product_store.append(get_product_of_list(_tmp_list))
         # print("step",_step)
@@ -209,6 +211,7 @@ def get_product_of_list(_list):
     _product = 1
     for _factor in _list:
         _product *= _factor
+    print(_list)
     print("product", _product)
     return _product
 
