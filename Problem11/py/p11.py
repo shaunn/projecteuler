@@ -129,18 +129,32 @@ def products_diagonal(_matrix, _coordinates, _range):
 
 
 def products_top_down(_matrix, _coordinates, _range):
+    # A bit tricky, but manageable
     _a = _coordinates[0]
     _b = _coordinates[1]
     _tmp_list = []
 
-    if _a + _range >= len(_matrix):
-        _range = len(_matrix) - _a + 1
     for _step in range(_range):
-        if _a + _step >= len(_matrix):
-            continue
-        _tmp_list.append(_matrix[_a + _step][_b])
+        # This test is to avoid index out of range errors
+        if _a + _step < len(_matrix[0]) and _b + _step < len(_matrix):
+            # Increment both a and b by one
+            _tmp_list.append(_matrix[_a + _step][_b])
 
+    # Get the product and store it
     product_store.append(get_product_of_list(_tmp_list))
+
+    # _a = _coordinates[0]
+    # _b = _coordinates[1]
+    # _tmp_list = []
+    #
+    # if _a + _range >= len(_matrix):
+    #     _range = len(_matrix) - _a + 1
+    # for _step in range(_range):
+    #     if _a + _step >= len(_matrix):
+    #         continue
+    #     _tmp_list.append(_matrix[_a + _step][_b])
+    #
+    # product_store.append(get_product_of_list(_tmp_list))
 
 
 def get_product_of_list(_list):
