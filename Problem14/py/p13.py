@@ -20,42 +20,26 @@ def main():
     chain_len_list = []
     while True:
         s += 1
-        # s = 837798
         n = s
 
         chain_list = [s]
-        # print("----------")
         if s == 1000000:
             print("The starting number that produces the "
-                  "longest chain:", chain_len_list.index(max(chain_len_list))+1)
-            print("max",max(chain_len_list))
+                  "longest chain:",
+                  chain_len_list.index(max(chain_len_list)) + 1)
+            print("max", max(chain_len_list))
             break
 
         while n != 1:
-            # print("s",s)
-            #
-            # print("n",n)
-            #
-            # print("n % 2",n % 2)
-            # print("1 % 2",1 % 2)
+            # Apply the appropriate rule whether even else odd
             if n % 2 == 0:
-                n = int(n/2)
-                # print("even")
+                n = int(n / 2)
             else:
-                n = 3*n + 1
-                # print("odd")
+                n = 3 * n + 1
 
-        # print("n",n)
+            # Append the term to the chain list
             chain_list.append(n)
-        # print("s",s,"len(chain_list)",len(chain_list))
         chain_len_list.append(len(chain_list))
-        # print("chain_len_list",chain_len_list)
-        # print("chain_list",chain_list)
-        # print("s",s)
-        # print("chain_len_list.index(max(chain_len_list))",chain_len_list.index(max(chain_len_list))+1)
-        # break
-
-
 
 
 
