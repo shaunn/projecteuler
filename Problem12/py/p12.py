@@ -49,7 +49,7 @@ def main():
         # else:
         #     largest_potential_factor = int(((triangular_number + 1) / 2))
         # Replacing the commented code above with the single line below
-        #  took the runtime from 6 hours to 6 minutes
+        #  took the runtime from 6 hours to 6 seconds!
         largest_potential_factor = int(round(triangular_number**(1/2)))
 
         factors = [1]
